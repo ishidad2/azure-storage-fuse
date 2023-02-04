@@ -15,9 +15,9 @@ cd -
 cp ../blobfuse2 ./
 cp ../setup/11-blobfuse2.conf ./
 cp ../setup/blobfuse2-logrotate ./
-
+name=ishidad2
 ver=`./blobfuse2 --version | cut -d " " -f 3`
-tag="azure-blobfuse2.$ver"
+tag="$name/azure-blobfuse2:$ver"
 
 # Cleanup older container image from docker
 docker image rm $tag -f
