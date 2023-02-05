@@ -1,5 +1,5 @@
 # Create container based on Ubuntu-22.04 Jammy Jellyfish image
-FROM ishidad2/symbol-server-build-base:ubuntu-gcc-12
+FROM ishidad2/symbol-rest:2.4.2
 
 #Define arg to determine whether to build for fuse2 or fuse3
 ARG FUSE2
@@ -27,21 +27,23 @@ COPY ./blobfuse2-logrotate /etc/logrotate.d/blobfuse2
 
 # Create mount directory structure
 RUN \
-	mkdir -p /symbol-workdir  && \
-	mkdir -p /tmp/blobfuse_temp && \
-	chmod 777 /symbol-workdir  && \
-	chmod 777 /tmp/blobfuse_temp
+	mkdir -p /symbol-workdir && \
+	mkdir -p /blobfuse_temp && \
+	chmod 777 /symbol-workdir && \
+	chmod 777 /blobfuse_temp
 
 
 # Create the mount script and set it to entry point once container start
 RUN \
+	echo "bash service rsyslog start" > /usr/share/blobfuse2/startup.sh && \
 	echo "/sbin/rsyslogd" > /usr/share/blobfuse2/blobfuse2-mount.sh && \
 	echo "blobfuse2 mount /symbol-workdir --config-file=/usr/share/blobfuse2/config.yaml  --ignore-open-flags --foreground=true" >> /usr/share/blobfuse2/blobfuse2-mount.sh && \
 	echo "blobfuse2 unmount all" > /usr/share/blobfuse2/blobfuse2-umount.sh && \
 	chmod 777 /usr/share/blobfuse2/blobfuse2-mount.sh && \
 	chmod 777 /usr/share/blobfuse2/blobfuse2-umount.sh && \
 	ln -s  /usr/share/blobfuse2/blobfuse2-mount.sh /usr/local/bin/fuse && \
-	ln -s  /usr/share/blobfuse2/blobfuse2-umount.sh /usr/local/bin/unfuse 
+	ln -s  /usr/share/blobfuse2/blobfuse2-umount.sh /usr/local/bin/unfuse && \
+	ln -s  /usr/share/blobfuse2/startup.sh /usr/local/bin/startup 
 
 
-ENTRYPOINT ["bash", "fuse"]
+ENTRYPOINT ["bash", "fuse", "startup"]

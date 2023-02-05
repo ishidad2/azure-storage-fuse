@@ -15,10 +15,10 @@ cd -
 cp ../blobfuse2 ./
 cp ../setup/11-blobfuse2.conf ./
 cp ../setup/blobfuse2-logrotate ./
-name=ishidad2/symbol-server
-catapult_ver=ubuntu-gcc-12:1.0.3.5
+name=ishidad2/rest
+catapult_ver=:2.4.2
 ver=`./blobfuse2 --version | cut -d " " -f 3`
-tag="$name-azure-blobfuse2-$ver-$catapult_ver"
+tag="$name-azure-blobfuse2-$ver$catapult_ver"
 
 # Cleanup older container image from docker
 docker image rm $tag -f
@@ -27,10 +27,10 @@ docker image rm $tag -f
 if [ "$1" == "fuse2" ]
 then
 	echo "Build container for libfuse"
-	docker build -t $tag -f Dockerfile-for-symbol . --build-arg FUSE2=TRUE
+	docker build -t $tag -f Dockerfile-for-symbol-rest . --build-arg FUSE2=TRUE
 else
 	echo "Build container for libfuse3"
-	docker build -t $tag -f Dockerfile-for-symbol .
+	docker build -t $tag -f Dockerfile-for-symbol-rest .
 fi
  
 # Image build is executed so we can clean up temp executable from here

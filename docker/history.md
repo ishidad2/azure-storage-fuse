@@ -244,3 +244,19 @@ blobfuse2のdockerフォルダ内で実行する
 ```
 
 ### 出来上がるイメージ名：ishidad2/symbol-server-azure-blobfuse2-2.0.2-ubuntu-gcc-12:1.0.3.5
+
+# blobfuse2を追加したmongoイメージ作成
+blobfuse2のdockerフォルダ内で実行する
+```
+./buildcontainer-for-symbol-mongo.sh
+```
+
+### 出来上がるイメージ名：ishidad2/mongo-azure-blobfuse2-2.0.2:4.4.3-bionic
+
+# blobfuse2を追加したrestイメージ作成
+blobfuse2のdockerフォルダ内で実行する
+```
+./buildcontainer-for-symbol-rest.sh
+```
+
+### 出来上がるイメージ名：ishidad2/rest-azure-blobfuse2-2.0.2:2.4.2
