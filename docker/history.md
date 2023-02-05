@@ -181,12 +181,12 @@ RUN echo "docker image build $BUILD_NUMBER"
 CMD ["/bin/bash"]
 ```
 
-# 最終イメージ
+# 最終イメージ(Symbol)
 ```
 docker build -f Dockerfile-preimage4 -t ishidad2/symbol-server-build-base:ubuntu-gcc-12 .
 ```
 
-# TODO この後にblobfuse2の処理レイヤーを追加する
+# blobfuse2の処理レイヤーを追加する
 ```
 # Create container based on Ubuntu-22.04 Jammy Jellyfish image
 FROM ishidad2/symbol-server-build-base:ubuntu-gcc-12
@@ -242,3 +242,5 @@ blobfuse2のdockerフォルダ内で実行する
 ```
 ./buildcontainer-for-symbol.sh
 ```
+
+### 出来上がるイメージ名：ishidad2/symbol-server-azure-blobfuse2-2.0.2-ubuntu-gcc-12:1.0.3.5
